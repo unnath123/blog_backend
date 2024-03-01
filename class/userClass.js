@@ -39,7 +39,7 @@ const User = class{
         return new Promise(async(resolve, reject)=>{
             try{
                 const userExist = await userModel.findOne({
-                    $or: [{username: this.username},{email: this.email}]
+                    $or: [{ email }, { username }],
                 })
     
                 if(userExist && userExist.username === username) reject("username already exist");
@@ -55,3 +55,5 @@ const User = class{
 
 
 }
+
+module.exports = User;

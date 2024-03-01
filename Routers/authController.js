@@ -6,7 +6,7 @@ const User = require("../class/userClass")
 
 authRoute.post("/register", async (req, res)=>{
     const {name, username, email, password} = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     try{
         await validateRegistrationData({name, username, email, password})
@@ -20,20 +20,19 @@ authRoute.post("/register", async (req, res)=>{
     }
 
     try{
-        const xx = await User.userNameandEmailExist({username, email});
-        
-        const newUser = User({name, username, email, password}) 
-        // const userDB = await newUser.register();
-        return res.send({
-            status:201,
-            message:"user created successfully",
-            // data:userDB
-        })
+            await User.userNameandEmailExist({ email, username });
+            const obj = new User({ email, name, username, password });
+            const userDb = await obj.register();
+            return res.send({
+            status: 201,
+            message: "Register successfull",
+            data: userDb,
+            });
     }   
     catch(err){
         return res.send({
             status:400,
-            message: "username exist"
+            message: "username bbbbb exist"
         })
     }
 
